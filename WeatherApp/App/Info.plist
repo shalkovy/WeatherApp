@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>API_KEY</key>
-	<string>cad7bd87b4aa7e13f96a209ae0ed692d</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We’ll use this to personalize your app experience</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

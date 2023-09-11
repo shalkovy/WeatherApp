@@ -5,18 +5,22 @@
 //  Created by Dima Shelkov on 07/09/2023.
 //
 
-import Foundation
+import UIKit
 
 protocol WeatherPresenterProtocol {
     func didLoad()
+    func searchButtonTapped(from navController: UINavigationController?)
 }
 
 final class WeatherPresenter: WeatherPresenterProtocol {
     private let interactor: WeatherInteractorProtocol
+    private let router: WeatherRouterProtocol
     weak var view: WeatherViewControllerProtocol?
     
-    init(interactor: WeatherInteractorProtocol) {
+    init(interactor: WeatherInteractorProtocol,
+         router: WeatherRouterProtocol) {
         self.interactor = interactor
+        self.router = router
     }
     
     func didLoad() {
@@ -27,11 +31,16 @@ final class WeatherPresenter: WeatherPresenterProtocol {
                 self?.view?.updateLabel(with: weather)
             case .failure(let error):
                 if let localized = error as? LocalizedError {
-                    self?.view?.showErrorAlert(error: error as! LocalizedError)
+                    self?.view?.showErrorAlert(error: localized)
                 } else {
                     print(error)
+                    
                 }
             }
         }
+    }
+    
+    func searchButtonTapped(from navController: UINavigationController?) {
+        router.navigateToSearch(navController)
     }
 }

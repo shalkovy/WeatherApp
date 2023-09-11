@@ -28,6 +28,7 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         super.viewDidLoad()
         presenter.didLoad()
         setupLabel()
+        setupNavBar()
         view.backgroundColor = .systemBackground
     }
     
@@ -48,5 +49,18 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
             label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+    }
+    
+    private func setupNavBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "magnifyingglass"),
+            style: .plain,
+            target: self,
+            action: #selector(searchTapped))
+    }
+    
+    @objc
+    private func searchTapped() {
+        presenter.searchButtonTapped(from: self.navigationController)
     }
 }

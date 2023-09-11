@@ -27,6 +27,12 @@
 		DBAB3C1F2AAB37C500032581 /* WeatherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C1E2AAB37C500032581 /* WeatherData.swift */; };
 		DBAB3C222AAB37F700032581 /* WeatherInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C212AAB37F700032581 /* WeatherInfo.swift */; };
 		DBAB3C242AAB40A400032581 /* UIColor+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C232AAB40A400032581 /* UIColor+Ext.swift */; };
+		DBAB3C2E2AAE525E00032581 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C2D2AAE525E00032581 /* SearchViewController.swift */; };
+		DBAB3C302AAE53A100032581 /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */; };
+		DBAB3C322AAE53B100032581 /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C312AAE53B100032581 /* SearchInteractor.swift */; };
+		DBAB3C342AAE53E700032581 /* SearchConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */; };
+		DBAB3C362AAF05BF00032581 /* PlistKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C352AAF05BF00032581 /* PlistKeys.swift */; };
+		DBAB3C382AAF0FE800032581 /* SearchByNameEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +69,12 @@
 		DBAB3C1E2AAB37C500032581 /* WeatherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherData.swift; sourceTree = "<group>"; };
 		DBAB3C212AAB37F700032581 /* WeatherInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfo.swift; sourceTree = "<group>"; };
 		DBAB3C232AAB40A400032581 /* UIColor+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ext.swift"; sourceTree = "<group>"; };
+		DBAB3C2D2AAE525E00032581 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
+		DBAB3C312AAE53B100032581 /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
+		DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConfigurator.swift; sourceTree = "<group>"; };
+		DBAB3C352AAF05BF00032581 /* PlistKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistKeys.swift; sourceTree = "<group>"; };
+		DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameEndpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +118,7 @@
 			children = (
 				DBAB3C272AAB420D00032581 /* App */,
 				DBAB3C252AAB40BB00032581 /* Helpers */,
+				DBAB3C2C2AAE51FB00032581 /* Search */,
 				DBAB3C0D2AA9F1C000032581 /* Weather */,
 				DBAB3C262AAB41FC00032581 /* Extensions */,
 			);
@@ -149,6 +162,7 @@
 			children = (
 				DBAB3C162AAA87B700032581 /* NetworkHelper.swift */,
 				DBAB3C182AAA884200032581 /* Endpoint.swift */,
+				DBAB3C352AAF05BF00032581 /* PlistKeys.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -190,6 +204,18 @@
 				DBAB3C142AAA873000032581 /* LocationError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		DBAB3C2C2AAE51FB00032581 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				DBAB3C2D2AAE525E00032581 /* SearchViewController.swift */,
+				DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */,
+				DBAB3C312AAE53B100032581 /* SearchInteractor.swift */,
+				DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */,
+				DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,6 +322,9 @@
 				DBAB3C1F2AAB37C500032581 /* WeatherData.swift in Sources */,
 				DBAB3C082AA9EFFC00032581 /* WeatherPresenter.swift in Sources */,
 				DBAB3C112AA9FAC600032581 /* LocationService.swift in Sources */,
+				DBAB3C2E2AAE525E00032581 /* SearchViewController.swift in Sources */,
+				DBAB3C302AAE53A100032581 /* SearchPresenter.swift in Sources */,
+				DBAB3C362AAF05BF00032581 /* PlistKeys.swift in Sources */,
 				DBAB3C0A2AA9F17800032581 /* WeatherInteractor.swift in Sources */,
 				DBAB3C172AAA87B700032581 /* NetworkHelper.swift in Sources */,
 				DBAB3C242AAB40A400032581 /* UIColor+Ext.swift in Sources */,
@@ -304,11 +333,14 @@
 				DBAB3C222AAB37F700032581 /* WeatherInfo.swift in Sources */,
 				DBAB3C1D2AAA8E0400032581 /* CurrentWeatherEndpoint.swift in Sources */,
 				DBAB3C1B2AAA8D8700032581 /* WeatherNetworkService.swift in Sources */,
+				DBAB3C322AAE53B100032581 /* SearchInteractor.swift in Sources */,
+				DBAB3C342AAE53E700032581 /* SearchConfigurator.swift in Sources */,
 				DBAB3C0C2AA9F1A100032581 /* WeatherRouter.swift in Sources */,
 				DBAB3C152AAA873000032581 /* LocationError.swift in Sources */,
 				DBAB3C0F2AA9F27A00032581 /* WeatherConfigurator.swift in Sources */,
 				DBAB3C192AAA884200032581 /* Endpoint.swift in Sources */,
 				DBAB3C132AAA00D000032581 /* UIViewController+Ext.swift in Sources */,
+				DBAB3C382AAF0FE800032581 /* SearchByNameEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

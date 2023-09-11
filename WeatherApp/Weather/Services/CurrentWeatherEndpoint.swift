@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 enum CurrentWeatherEndpoint: Endpoint {
-    case getWeather(lat: CLLocationDegrees, lon: CLLocationDegrees, appId: String)
+    case getWeather(lat: CLLocationDegrees, lon: CLLocationDegrees)
     
     var scheme: String {
         switch self {
@@ -34,11 +34,11 @@ enum CurrentWeatherEndpoint: Endpoint {
     
     var parameters: [URLQueryItem] {
         switch self {
-        case .getWeather(let lat, let lon, let appId):
+        case .getWeather(let lat, let lon):
             return [
                 URLQueryItem(name: "lat", value: lat.description),
                 URLQueryItem(name: "lon", value: lon.description),
-                URLQueryItem(name: "appid", value: appId),
+                URLQueryItem(name: "appid", value: Keys.apiKey),
                 URLQueryItem(name: "units", value: "metric")
             ]
         }

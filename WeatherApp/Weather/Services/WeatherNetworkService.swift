@@ -9,7 +9,8 @@ import Foundation
 import CoreLocation
 
 protocol WeatherNetworkServiceProtocol {
-    func getCurrentWeather(location: CLLocation, completion: @escaping (Result<WeatherData, Error>) -> ())
+    func getCurrentWeather(location: CLLocation,
+                           completion: @escaping (Result<WeatherData, Error>) -> ())
 }
 
 final class WeatherNetworkService: WeatherNetworkServiceProtocol {
@@ -19,10 +20,10 @@ final class WeatherNetworkService: WeatherNetworkServiceProtocol {
         self.helper = helper
     }
     
-    func getCurrentWeather(location: CLLocation, completion: @escaping (Result<WeatherData, Error>) -> ()) {
+    func getCurrentWeather(location: CLLocation,
+                           completion: @escaping (Result<WeatherData, Error>) -> ()) {
         let endpoint = CurrentWeatherEndpoint.getWeather(lat: location.coordinate.latitude,
-                                                         lon: location.coordinate.longitude,
-                                                         appId: "cad7bd87b4aa7e13f96a209ae0ed692d")
+                                                         lon: location.coordinate.longitude)
         helper.request(endpoint: endpoint, completion: completion)
     }
 }
