@@ -31,8 +31,12 @@
 		DBAB3C302AAE53A100032581 /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */; };
 		DBAB3C322AAE53B100032581 /* SearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C312AAE53B100032581 /* SearchInteractor.swift */; };
 		DBAB3C342AAE53E700032581 /* SearchConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */; };
-		DBAB3C362AAF05BF00032581 /* PlistKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C352AAF05BF00032581 /* PlistKeys.swift */; };
+		DBAB3C362AAF05BF00032581 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C352AAF05BF00032581 /* Keys.swift */; };
 		DBAB3C382AAF0FE800032581 /* SearchByNameEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */; };
+		DBAB3C3A2AAF430A00032581 /* SearchNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C392AAF430A00032581 /* SearchNetworkService.swift */; };
+		DBAB3C3C2AB0AEA300032581 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3B2AB0AEA300032581 /* City.swift */; };
+		DBAB3C3E2AB0B5B800032581 /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3D2AB0B5B800032581 /* SearchError.swift */; };
+		DBAB3C402AB0C3D200032581 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3F2AB0C3D200032581 /* SearchRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +77,12 @@
 		DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		DBAB3C312AAE53B100032581 /* SearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInteractor.swift; sourceTree = "<group>"; };
 		DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchConfigurator.swift; sourceTree = "<group>"; };
-		DBAB3C352AAF05BF00032581 /* PlistKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlistKeys.swift; sourceTree = "<group>"; };
+		DBAB3C352AAF05BF00032581 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByNameEndpoint.swift; sourceTree = "<group>"; };
+		DBAB3C392AAF430A00032581 /* SearchNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchNetworkService.swift; sourceTree = "<group>"; };
+		DBAB3C3B2AB0AEA300032581 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		DBAB3C3D2AB0B5B800032581 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
+		DBAB3C3F2AB0C3D200032581 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +159,7 @@
 		DBAB3C202AAB37E800032581 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				DBAB3C3B2AB0AEA300032581 /* City.swift */,
 				DBAB3C1E2AAB37C500032581 /* WeatherData.swift */,
 				DBAB3C212AAB37F700032581 /* WeatherInfo.swift */,
 			);
@@ -162,7 +171,7 @@
 			children = (
 				DBAB3C162AAA87B700032581 /* NetworkHelper.swift */,
 				DBAB3C182AAA884200032581 /* Endpoint.swift */,
-				DBAB3C352AAF05BF00032581 /* PlistKeys.swift */,
+				DBAB3C352AAF05BF00032581 /* Keys.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -202,6 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				DBAB3C142AAA873000032581 /* LocationError.swift */,
+				DBAB3C3D2AB0B5B800032581 /* SearchError.swift */,
 			);
 			path = Errors;
 			sourceTree = "<group>";
@@ -211,9 +221,11 @@
 			children = (
 				DBAB3C2D2AAE525E00032581 /* SearchViewController.swift */,
 				DBAB3C2F2AAE53A100032581 /* SearchPresenter.swift */,
+				DBAB3C3F2AB0C3D200032581 /* SearchRouter.swift */,
 				DBAB3C312AAE53B100032581 /* SearchInteractor.swift */,
 				DBAB3C332AAE53E700032581 /* SearchConfigurator.swift */,
 				DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */,
+				DBAB3C392AAF430A00032581 /* SearchNetworkService.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -321,10 +333,12 @@
 				DBAB3BDC2AA9E4C600032581 /* WeatherViewController.swift in Sources */,
 				DBAB3C1F2AAB37C500032581 /* WeatherData.swift in Sources */,
 				DBAB3C082AA9EFFC00032581 /* WeatherPresenter.swift in Sources */,
+				DBAB3C402AB0C3D200032581 /* SearchRouter.swift in Sources */,
 				DBAB3C112AA9FAC600032581 /* LocationService.swift in Sources */,
 				DBAB3C2E2AAE525E00032581 /* SearchViewController.swift in Sources */,
 				DBAB3C302AAE53A100032581 /* SearchPresenter.swift in Sources */,
-				DBAB3C362AAF05BF00032581 /* PlistKeys.swift in Sources */,
+				DBAB3C3C2AB0AEA300032581 /* City.swift in Sources */,
+				DBAB3C362AAF05BF00032581 /* Keys.swift in Sources */,
 				DBAB3C0A2AA9F17800032581 /* WeatherInteractor.swift in Sources */,
 				DBAB3C172AAA87B700032581 /* NetworkHelper.swift in Sources */,
 				DBAB3C242AAB40A400032581 /* UIColor+Ext.swift in Sources */,
@@ -332,6 +346,8 @@
 				DBAB3BDA2AA9E4C600032581 /* SceneDelegate.swift in Sources */,
 				DBAB3C222AAB37F700032581 /* WeatherInfo.swift in Sources */,
 				DBAB3C1D2AAA8E0400032581 /* CurrentWeatherEndpoint.swift in Sources */,
+				DBAB3C3A2AAF430A00032581 /* SearchNetworkService.swift in Sources */,
+				DBAB3C3E2AB0B5B800032581 /* SearchError.swift in Sources */,
 				DBAB3C1B2AAA8D8700032581 /* WeatherNetworkService.swift in Sources */,
 				DBAB3C322AAE53B100032581 /* SearchInteractor.swift in Sources */,
 				DBAB3C342AAE53E700032581 /* SearchConfigurator.swift in Sources */,
