@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 
 enum CurrentWeatherEndpoint: Endpoint {
-    case getWeather(lat: CLLocationDegrees, lon: CLLocationDegrees)
+    case getWeather(lat: Double, lon: Double)
     
     var scheme: String {
         switch self {

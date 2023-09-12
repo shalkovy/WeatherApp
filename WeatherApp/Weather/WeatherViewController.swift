@@ -9,11 +9,21 @@ import UIKit
 
 protocol WeatherViewControllerProtocol: UIViewController {
     func updateLabel(with text: String)
+    func updateActivity(_ isFetching: Bool)
 }
 
 final class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
     private let presenter: WeatherPresenterProtocol
-    private let label = UILabel()
+    private lazy var weatherLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.textColor
+        label.font = .boldSystemFont(ofSize: 18)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
+    }()
+    
+    private let activity = UIActivityIndicatorView(style: .large)
     
     init(presenter: WeatherPresenterProtocol) {
         self.presenter = presenter
@@ -27,27 +37,41 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.didLoad()
-        setupLabel()
+        layoutWeatherLabel()
+        layoutActivity()
         setupNavBar()
         view.backgroundColor = .systemBackground
     }
     
-    func updateLabel(with text: String) {
-        label.text = text
+    func updateActivity(_ isFetching: Bool) {
+        isFetching ? activity.startAnimating() : activity.stopAnimating()
+        
+        UIView.animate(withDuration: 0.5) {
+            self.weatherLabel.alpha = isFetching ? 0.0 : 1.0
+        }
     }
     
-    private func setupLabel() {
-        label.textColor = UIColor.textColor
-        label.font = .boldSystemFont(ofSize: 18)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(label)
+    func updateLabel(with text: String) {
+        weatherLabel.text = text
+    }
+    
+    private func layoutActivity() {
+        view.addSubview(activity)
+        activity.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func layoutWeatherLabel() {
+        view.addSubview(weatherLabel)
+        weatherLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            weatherLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            weatherLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     

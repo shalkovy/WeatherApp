@@ -12,11 +12,16 @@ protocol SearchPresenterProtocol {
     func didSelect(_ city: City, from vc: UIViewController)
 }
 
+protocol SearchPresenterDelegate: AnyObject {
+    func didSelect(_ city: City)
+}
+
 final class SearchPresenter: SearchPresenterProtocol {
     private let interactor: SearchInteractorProtocol
     private let router: SearchRouterProtocol
     
     weak var view: SearchViewControllerProtocol?
+    weak var delegate: SearchPresenterDelegate?
     
     init(interactor: SearchInteractorProtocol,
          router: SearchRouterProtocol) {
@@ -25,6 +30,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
     
     func didSelect(_ city: City, from vc: UIViewController) {
+        delegate?.didSelect(city)
         router.back(from: vc.navigationController)
     }
     
