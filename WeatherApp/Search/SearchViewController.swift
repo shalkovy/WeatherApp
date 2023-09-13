@@ -22,7 +22,7 @@ final class SearchViewController: UIViewController, SearchViewControllerProtocol
     
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
-        searchBar.placeholder = "Search Cities"
+        searchBar.placeholder = "Search"
         searchBar.delegate = self
         return searchBar
     }()
@@ -60,7 +60,6 @@ final class SearchViewController: UIViewController, SearchViewControllerProtocol
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
         layoutSearchBar()
         layoutTableView()
         layoutActivity()

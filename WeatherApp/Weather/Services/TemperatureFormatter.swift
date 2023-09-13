@@ -10,7 +10,6 @@ import Foundation
 final class TemperatureFormatter {
     func convert(temperature: Double,
                  to unit: UnitTemperature) -> String {
-        
         let measurementFormatter = MeasurementFormatter()
         measurementFormatter.unitOptions = .providedUnit
         measurementFormatter.unitStyle = .medium

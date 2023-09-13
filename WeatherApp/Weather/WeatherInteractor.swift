@@ -9,14 +9,19 @@ import Foundation
 import CoreLocation
 
 protocol WeatherInteractorProtocol: AnyObject {
-    func getWeather(for location: City?,
-                    completion: @escaping (Result<WeatherData, Error>) -> ())
+    func getCurrentLocation() throws
+    func getWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherData, Error>) -> ())
+}
+
+protocol WeatherInteractorOutput: AnyObject {
+    func didUpdate(_ location: CLLocation?)
+    func showError(_ error: Error)
 }
 
 final class WeatherInteractor: WeatherInteractorProtocol {
     private var locationService: LocationServiceProtocol
     private let networkService: WeatherNetworkServiceProtocol
-    private var currentLocation: CLLocation?
+    weak var output: WeatherInteractorOutput?
     
     init(locationService: LocationServiceProtocol,
          networkService: WeatherNetworkServiceProtocol) {
@@ -25,31 +30,21 @@ final class WeatherInteractor: WeatherInteractorProtocol {
         self.locationService.delegate = self
     }
     
-    func getWeather(for location: City? = nil,
-                    completion: @escaping (Result<WeatherData, Error>) -> ()) {
-        if let city = location {
-            networkService.getWeather(lat: city.lat, lon: city.lon, completion: completion)
-        } else {
-            getWeatherForCurrentLocation(completion: completion)
-        }
+    func getWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherData, Error>) -> ()) {
+        networkService.getWeather(lat: lat, lon: lon, completion: completion)
     }
     
-    private func getWeatherForCurrentLocation(completion: @escaping (Result<WeatherData, Error>) -> ()) {
-        do {
-            try locationService.checkStatusAndUpdateLocation()
-        } catch {
-            completion(.failure(error))
-        }
-        
-        guard let location = currentLocation else { return }
-        networkService.getWeather(lat: location.coordinate.latitude,
-                                  lon: location.coordinate.longitude,
-                                  completion: completion)
+    func getCurrentLocation() throws {
+        try locationService.checkStatusAndUpdateLocation()
     }
 }
 
 extension WeatherInteractor: LocationServiceDelegate {
     func didUpdate(_ location: CLLocation?) {
-        currentLocation = location
+        output?.didUpdate(location)
+    }
+    
+    func showError(_ error: WeatherAppError) {
+        output?.showError(error)
     }
 }

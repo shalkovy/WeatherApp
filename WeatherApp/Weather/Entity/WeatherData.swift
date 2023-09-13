@@ -15,7 +15,3 @@ struct WeatherData: Codable {
     let name: String
     let cod: Int
 }
-
-struct MainInfo: Codable {
-    let temp: Double
-}

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 protocol WeatherPresenterProtocol {
     func didLoad()
@@ -18,7 +19,6 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     private let router: WeatherRouterProtocol
     private let formatter: TemperatureFormatter
     private var tempUnit: UnitTemperature
-    
     private var weatherData: WeatherData?
     weak var view: WeatherViewControllerProtocol?
     
@@ -37,28 +37,31 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     }
     
     func didLoad() {
-        view?.updateActivity(true)
-        interactor.getWeather(for: nil) { [weak self] result in
-            self?.handleWeather(result)
-        }
+        view?.updateActivity(animate: true)
+        getCurrentLocation()
     }
     
     func searchButtonTapped(from vc: UIViewController) {
         router.navigateToSearch(vc.navigationController, delegate: self)
     }
     
+    private func getCurrentLocation() {
+        do {
+            try interactor.getCurrentLocation()
+        } catch {
+            view?.updateActivity(animate: false)
+            view?.showAlert(error)
+        }
+    }
+    
     private func handleWeather(_ result: Result<WeatherData, Error>) {
-        view?.updateActivity(false)
+        view?.updateActivity(animate: false)
         switch result {
         case .success(let data):
             weatherData = data
             view?.updateLabel(with: displayedData())
         case .failure(let error):
-            if let localized = error as? LocalizedError {
-                view?.showErrorAlert(error: localized)
-            } else {
-                print(error)
-            }
+            view?.showAlert(error)
         }
     }
     
@@ -69,10 +72,26 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     }
 }
 
+extension WeatherPresenter: WeatherInteractorOutput {
+    func didUpdate(_ location: CLLocation?) {
+        guard let location else { return }
+        view?.updateActivity(animate: true)
+        interactor.getWeather(lat: location.coordinate.latitude,
+                              lon: location.coordinate.longitude) { [weak self] result in
+            self?.handleWeather(result)
+        }
+    }
+    
+    func showError(_ error: Error) {
+        view?.updateActivity(animate: false)
+        view?.showAlert(error)
+    }
+}
+
 extension WeatherPresenter: SearchPresenterDelegate {
     func didSelect(_ city: City) {
-        view?.updateActivity(true)
-        interactor.getWeather(for: city) { [weak self] result in
+        view?.updateActivity(animate: true)
+        interactor.getWeather(lat: city.lat, lon: city.lon) { [weak self] result in
             self?.handleWeather(result)
         }
     }

@@ -15,6 +15,7 @@ protocol LocationServiceProtocol {
 
 protocol LocationServiceDelegate: AnyObject {
     func didUpdate(_ location: CLLocation?)
+    func showError(_ error: WeatherAppError)
 }
 
 final class LocationService: NSObject, LocationServiceProtocol {
@@ -34,11 +35,11 @@ final class LocationService: NSObject, LocationServiceProtocol {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted, .denied:
-            throw LocationError.permissionDenied
+            throw WeatherAppError.permissionDenied
         case .authorizedAlways, .authorizedWhenInUse:
             break
         @unknown default:
-            throw LocationError.defaultError
+            throw WeatherAppError.defaultError
         }
     }
 }
@@ -47,5 +48,14 @@ extension LocationService: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager,
                          didUpdateLocations locations: [CLLocation]) {
         delegate?.didUpdate(locations.first)
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .restricted, .denied:
+            delegate?.showError(.permissionDenied)
+        default:
+            return
+        }
     }
 }

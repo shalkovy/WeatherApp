@@ -15,6 +15,7 @@ final class WeatherConfigurator {
                                            networkService: networkService)
         let router = WeatherRouter()
         let presenter = WeatherPresenter(interactor: interactor, router: router)
+        interactor.output = presenter
         let controller = WeatherViewController(presenter: presenter)
         presenter.view = controller
         return controller

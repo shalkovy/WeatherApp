@@ -8,8 +8,7 @@
 import UIKit
 
 protocol WeatherRouterProtocol {
-    func navigateToSearch(_ navController: UINavigationController?,
-                          delegate: SearchPresenterDelegate)
+    func navigateToSearch(_ navController: UINavigationController?, delegate: SearchPresenterDelegate)
 }
 
 final class WeatherRouter: WeatherRouterProtocol {

@@ -8,10 +8,8 @@
 import UIKit
 
 extension UIViewController {
-    func showErrorAlert(with title: String = "Error", error: LocalizedError) {
-        let alert = UIAlertController(title: title, message: error.errorDescription, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
+    func showAlert(title: String = "Error", _ error: Error) {
+        let alert = ErrorHandlingService().alertController(title: title, error: error)
         present(alert, animated: true, completion: nil)
     }
 }

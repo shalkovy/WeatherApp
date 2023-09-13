@@ -41,17 +41,13 @@ final class SearchPresenter: SearchPresenterProtocol {
             case .success(let cities):
                 self?.view?.updateActivity(false)
                 guard cities.count > 1 else {
-                    self?.view?.showErrorAlert(error: SearchError.nothingFound)
+                    self?.view?.showAlert(WeatherAppError.nothingFound)
                     return
                 }
                 self?.updateViewWith(cities)
             case .failure(let error):
                 self?.view?.updateActivity(false)
-                if let localized = error as? LocalizedError {
-                    self?.view?.showErrorAlert(error: localized)
-                } else {
-                    print(error)
-                }
+                self?.view?.showAlert(error)
             }
         }
     }
