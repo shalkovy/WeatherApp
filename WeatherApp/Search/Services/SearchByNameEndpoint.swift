@@ -39,7 +39,6 @@ enum SearchByNameEndpoint: Endpoint {
             return [
                 URLQueryItem(name: "q", value: name),
                 URLQueryItem(name: "appid", value: Keys.apiKey),
-//                URLQueryItem(name: "limit", value: 5)
                 URLQueryItem(name: "limit", value: "5")
             ]
         }

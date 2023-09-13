@@ -7,9 +7,10 @@
 
 import UIKit
 
-protocol WeatherViewControllerProtocol: UIViewController {
+protocol WeatherViewControllerProtocol: AnyObject {
     func updateLabel(with text: String)
     func updateActivity(animate isFetching: Bool)
+    func show(error: Error)
 }
 
 final class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
@@ -59,6 +60,10 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         presenter.didLoad()
         layoutViews()
         view.backgroundColor = .systemBackground
+    }
+    
+    func show(error: Error) {
+        showAlert(error)
     }
     
     func updateActivity(animate: Bool) {

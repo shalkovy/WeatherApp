@@ -40,6 +40,7 @@
 		DBAB3C442AB1CBAF00032581 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C432AB1CBAF00032581 /* UIView+Ext.swift */; };
 		DBAB3C462AB1DA5B00032581 /* MainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C452AB1DA5B00032581 /* MainInfo.swift */; };
 		DBAB3C4A2AB1DC1100032581 /* ErrorHandlingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C492AB1DC1100032581 /* ErrorHandlingService.swift */; };
+		DBAB3C4D2AB1DD6600032581 /* WeatherPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C4C2AB1DD6600032581 /* WeatherPresenterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		DBAB3C432AB1CBAF00032581 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		DBAB3C452AB1DA5B00032581 /* MainInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInfo.swift; sourceTree = "<group>"; };
 		DBAB3C492AB1DC1100032581 /* ErrorHandlingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandlingService.swift; sourceTree = "<group>"; };
+		DBAB3C4C2AB1DD6600032581 /* WeatherPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 		DBAB3BED2AA9E4C700032581 /* WeatherAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				DBAB3C4B2AB1DD3300032581 /* Weather */,
 				DBAB3BEE2AA9E4C700032581 /* WeatherAppTests.swift */,
 			);
 			path = WeatherAppTests;
@@ -253,6 +256,14 @@
 				DBAB3C372AAF0FE800032581 /* SearchByNameEndpoint.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		DBAB3C4B2AB1DD3300032581 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				DBAB3C4C2AB1DD6600032581 /* WeatherPresenterTests.swift */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBAB3BEF2AA9E4C700032581 /* WeatherAppTests.swift in Sources */,
+				DBAB3C4D2AB1DD6600032581 /* WeatherPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,58 +17,42 @@ protocol WeatherPresenterProtocol {
 final class WeatherPresenter: WeatherPresenterProtocol {
     private let interactor: WeatherInteractorProtocol
     private let router: WeatherRouterProtocol
-    private let formatter: TemperatureFormatter
-    private var tempUnit: UnitTemperature
+    private let temperatureFormatter: TemperatureFormatter
+    private(set) var tempUnit: UnitTemperature
     private var weatherData: WeatherData?
     weak var view: WeatherViewControllerProtocol?
     
     init(interactor: WeatherInteractorProtocol,
          router: WeatherRouterProtocol,
-         formatter: TemperatureFormatter = TemperatureFormatter()) {
+         temperatureFormatter: TemperatureFormatter = TemperatureFormatter(),
+         tempUnit: UnitTemperature = Locale.current.usesMetricSystem ? .celsius : .fahrenheit) {
         self.interactor = interactor
         self.router = router
-        self.formatter = formatter
-        self.tempUnit = Locale.current.usesMetricSystem ? .celsius : .fahrenheit
+        self.temperatureFormatter = temperatureFormatter
+        self.tempUnit = tempUnit
     }
     
     func switchTemperatureUnit() {
-        tempUnit = tempUnit == .celsius ? UnitTemperature.fahrenheit : UnitTemperature.celsius
-        view?.updateLabel(with: displayedData())
+        tempUnit = tempUnit == .celsius ? .fahrenheit : .celsius
+        updateWeatherDisplay()
     }
     
     func didLoad() {
         view?.updateActivity(animate: true)
-        getCurrentLocation()
+        interactor.getCurrentLocation()
     }
     
     func searchButtonTapped(from vc: UIViewController) {
         router.navigateToSearch(vc.navigationController, delegate: self)
     }
     
-    private func getCurrentLocation() {
-        do {
-            try interactor.getCurrentLocation()
-        } catch {
-            view?.updateActivity(animate: false)
-            view?.showAlert(error)
-        }
-    }
-    
-    private func handleWeather(_ result: Result<WeatherData, Error>) {
+    private func updateWeatherDisplay() {
         view?.updateActivity(animate: false)
-        switch result {
-        case .success(let data):
-            weatherData = data
-            view?.updateLabel(with: displayedData())
-        case .failure(let error):
-            view?.showAlert(error)
-        }
-    }
-    
-    private func displayedData() -> String {
-        guard let data = weatherData else { return "" }
-        return data.name + "\n" + formatter.convert(temperature: data.main.temp,
-                                                    to: tempUnit)
+        guard let weatherData else { return }
+        let temperatureString = temperatureFormatter.convert(temperature: weatherData.main.temp,
+                                                             to: tempUnit)
+        let displayText = "\(weatherData.name)\n\(temperatureString)"
+        view?.updateLabel(with: displayText)
     }
 }
 
@@ -77,22 +61,24 @@ extension WeatherPresenter: WeatherInteractorOutput {
         guard let location else { return }
         view?.updateActivity(animate: true)
         interactor.getWeather(lat: location.coordinate.latitude,
-                              lon: location.coordinate.longitude) { [weak self] result in
-            self?.handleWeather(result)
+                              lon: location.coordinate.longitude) { [weak self] data in
+            self?.weatherData = data
+            self?.updateWeatherDisplay()
         }
     }
     
     func showError(_ error: Error) {
+        view?.show(error: error)
         view?.updateActivity(animate: false)
-        view?.showAlert(error)
     }
 }
 
 extension WeatherPresenter: SearchPresenterDelegate {
     func didSelect(_ city: City) {
         view?.updateActivity(animate: true)
-        interactor.getWeather(lat: city.lat, lon: city.lon) { [weak self] result in
-            self?.handleWeather(result)
+        interactor.getWeather(lat: city.lat, lon: city.lon) { [weak self] data in
+            self?.weatherData = data
+            self?.updateWeatherDisplay()
         }
     }
 }

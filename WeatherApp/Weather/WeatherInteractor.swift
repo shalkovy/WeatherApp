@@ -9,8 +9,8 @@ import Foundation
 import CoreLocation
 
 protocol WeatherInteractorProtocol: AnyObject {
-    func getCurrentLocation() throws
-    func getWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherData, Error>) -> ())
+    func getCurrentLocation()
+    func getWeather(lat: Double, lon: Double, completion: @escaping (WeatherData?) -> ())
 }
 
 protocol WeatherInteractorOutput: AnyObject {
@@ -30,12 +30,24 @@ final class WeatherInteractor: WeatherInteractorProtocol {
         self.locationService.delegate = self
     }
     
-    func getWeather(lat: Double, lon: Double, completion: @escaping (Result<WeatherData, Error>) -> ()) {
-        networkService.getWeather(lat: lat, lon: lon, completion: completion)
+    func getWeather(lat: Double, lon: Double, completion: @escaping (WeatherData?) -> ()) {
+        networkService.getWeather(lat: lat, lon: lon) { [weak self] result in
+            switch result {
+            case .success(let data):
+                completion(data)
+            case .failure(let error):
+                completion(nil)
+                self?.output?.showError(error)
+            }
+        }
     }
     
-    func getCurrentLocation() throws {
-        try locationService.checkStatusAndUpdateLocation()
+    func getCurrentLocation() {
+        do {
+            try locationService.checkStatusAndUpdateLocation()
+        } catch {
+            output?.showError(error)
+        }
     }
 }
 
