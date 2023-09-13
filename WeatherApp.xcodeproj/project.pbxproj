@@ -37,6 +37,7 @@
 		DBAB3C3C2AB0AEA300032581 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3B2AB0AEA300032581 /* City.swift */; };
 		DBAB3C3E2AB0B5B800032581 /* SearchError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3D2AB0B5B800032581 /* SearchError.swift */; };
 		DBAB3C402AB0C3D200032581 /* SearchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C3F2AB0C3D200032581 /* SearchRouter.swift */; };
+		DBAB3C422AB107F000032581 /* TemperatureFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBAB3C412AB107F000032581 /* TemperatureFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		DBAB3C3B2AB0AEA300032581 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		DBAB3C3D2AB0B5B800032581 /* SearchError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchError.swift; sourceTree = "<group>"; };
 		DBAB3C3F2AB0C3D200032581 /* SearchRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRouter.swift; sourceTree = "<group>"; };
+		DBAB3C412AB107F000032581 /* TemperatureFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			children = (
 				DBAB3BDB2AA9E4C600032581 /* WeatherViewController.swift */,
 				DBAB3C072AA9EFFC00032581 /* WeatherPresenter.swift */,
+				DBAB3C412AB107F000032581 /* TemperatureFormatter.swift */,
 				DBAB3C092AA9F17800032581 /* WeatherInteractor.swift */,
 				DBAB3C0B2AA9F1A100032581 /* WeatherRouter.swift */,
 				DBAB3C0E2AA9F27A00032581 /* WeatherConfigurator.swift */,
@@ -357,6 +360,7 @@
 				DBAB3C192AAA884200032581 /* Endpoint.swift in Sources */,
 				DBAB3C132AAA00D000032581 /* UIViewController+Ext.swift in Sources */,
 				DBAB3C382AAF0FE800032581 /* SearchByNameEndpoint.swift in Sources */,
+				DBAB3C422AB107F000032581 /* TemperatureFormatter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

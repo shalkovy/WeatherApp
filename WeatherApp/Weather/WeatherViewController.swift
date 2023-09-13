@@ -14,6 +14,7 @@ protocol WeatherViewControllerProtocol: UIViewController {
 
 final class WeatherViewController: UIViewController, WeatherViewControllerProtocol {
     private let presenter: WeatherPresenterProtocol
+    
     private lazy var weatherLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.textColor
@@ -21,6 +22,24 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
+    }()
+    
+    private lazy var tempSwitch: UISwitch = {
+        let tSwitch = UISwitch()
+        let action = UIAction { [weak self] action in
+            self?.presenter.switchTemperatureUnit()
+        }
+        tSwitch.addAction(action, for: .valueChanged)
+        return tSwitch
+    }()
+    
+    private lazy var darkModeSwitch: UISwitch = {
+        let dmSwitch = UISwitch()
+        let action = UIAction { [weak self] action in
+            self?.changeInterfaceStyle()
+        }
+        dmSwitch.addAction(action, for: .valueChanged)
+        return dmSwitch
     }()
     
     private let activity = UIActivityIndicatorView(style: .large)
@@ -37,9 +56,7 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.didLoad()
-        layoutWeatherLabel()
-        layoutActivity()
-        setupNavBar()
+        layoutViews()
         view.backgroundColor = .systemBackground
     }
     
@@ -53,6 +70,44 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     
     func updateLabel(with text: String) {
         weatherLabel.text = text
+    }
+    
+    private func changeInterfaceStyle() {
+        guard let window = view.window else { return }
+        let currentMode = window.overrideUserInterfaceStyle
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve) {
+            window.overrideUserInterfaceStyle = currentMode == .dark ? .light : .dark
+        }
+    }
+    
+    private func layoutViews() {
+        layoutWeatherLabel()
+        layoutActivity()
+        setupNavBar()
+        layoutTemperatureSwitch()
+        layoutDarkModeSwitch()
+    }
+    
+    private func layoutTemperatureSwitch() {
+        view.addSubview(tempSwitch)
+        tempSwitch.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tempSwitch.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tempSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                 constant: -16)
+        ])
+    }
+    
+    private func layoutDarkModeSwitch() {
+        view.addSubview(darkModeSwitch)
+        darkModeSwitch.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            darkModeSwitch.topAnchor.constraint(equalTo: tempSwitch.bottomAnchor, constant: 8),
+            darkModeSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                                                     constant: -16)
+        ])
     }
     
     private func layoutActivity() {
@@ -85,6 +140,6 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     
     @objc
     private func searchTapped() {
-        presenter.searchButtonTapped(from: self.navigationController)
+        presenter.searchButtonTapped(from: self)
     }
 }

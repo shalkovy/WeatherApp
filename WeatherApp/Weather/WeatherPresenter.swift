@@ -9,18 +9,31 @@ import UIKit
 
 protocol WeatherPresenterProtocol {
     func didLoad()
-    func searchButtonTapped(from navController: UINavigationController?)
+    func searchButtonTapped(from vc: UIViewController)
+    func switchTemperatureUnit()
 }
 
 final class WeatherPresenter: WeatherPresenterProtocol {
     private let interactor: WeatherInteractorProtocol
     private let router: WeatherRouterProtocol
+    private let formatter: TemperatureFormatter
+    private var tempUnit: UnitTemperature
+    
+    private var weatherData: WeatherData?
     weak var view: WeatherViewControllerProtocol?
     
     init(interactor: WeatherInteractorProtocol,
-         router: WeatherRouterProtocol) {
+         router: WeatherRouterProtocol,
+         formatter: TemperatureFormatter = TemperatureFormatter()) {
         self.interactor = interactor
         self.router = router
+        self.formatter = formatter
+        self.tempUnit = Locale.current.usesMetricSystem ? .celsius : .fahrenheit
+    }
+    
+    func switchTemperatureUnit() {
+        tempUnit = tempUnit == .celsius ? UnitTemperature.fahrenheit : UnitTemperature.celsius
+        view?.updateLabel(with: displayedData())
     }
     
     func didLoad() {
@@ -30,16 +43,16 @@ final class WeatherPresenter: WeatherPresenterProtocol {
         }
     }
     
-    func searchButtonTapped(from navController: UINavigationController?) {
-        router.navigateToSearch(navController, delegate: self)
+    func searchButtonTapped(from vc: UIViewController) {
+        router.navigateToSearch(vc.navigationController, delegate: self)
     }
     
     private func handleWeather(_ result: Result<WeatherData, Error>) {
         view?.updateActivity(false)
         switch result {
         case .success(let data):
-            let weather = data.name + "\n" + String(format: "%.1f", data.main.temp)
-            view?.updateLabel(with: weather)
+            weatherData = data
+            view?.updateLabel(with: displayedData())
         case .failure(let error):
             if let localized = error as? LocalizedError {
                 view?.showErrorAlert(error: localized)
@@ -47,6 +60,12 @@ final class WeatherPresenter: WeatherPresenterProtocol {
                 print(error)
             }
         }
+    }
+    
+    private func displayedData() -> String {
+        guard let data = weatherData else { return "" }
+        return data.name + "\n" + formatter.convert(temperature: data.main.temp,
+                                                    to: tempUnit)
     }
 }
 

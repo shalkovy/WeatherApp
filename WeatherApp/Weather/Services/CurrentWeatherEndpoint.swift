@@ -38,8 +38,7 @@ enum CurrentWeatherEndpoint: Endpoint {
             return [
                 URLQueryItem(name: "lat", value: lat.description),
                 URLQueryItem(name: "lon", value: lon.description),
-                URLQueryItem(name: "appid", value: Keys.apiKey),
-                URLQueryItem(name: "units", value: "metric")
+                URLQueryItem(name: "appid", value: Keys.apiKey)
             ]
         }
     }
