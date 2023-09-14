@@ -24,7 +24,7 @@ final class WeatherNetworkService: WeatherNetworkServiceProtocol {
     func getWeather(lat: Double,
                     lon: Double,
                     completion: @escaping (Result<WeatherData, Error>) -> ()) {
-        let endpoint = CurrentWeatherEndpoint.getWeather(lat: lat, lon: lon)
+        let endpoint = WeatherEndpoint.getWeather(lat: lat, lon: lon)
         helper.request(endpoint: endpoint, completion: completion)
     }
 }

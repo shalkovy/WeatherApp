@@ -19,7 +19,6 @@ protocol SearchPresenterDelegate: AnyObject {
 final class SearchPresenter: SearchPresenterProtocol {
     private let interactor: SearchInteractorProtocol
     private let router: SearchRouterProtocol
-    
     weak var view: SearchViewControllerProtocol?
     weak var delegate: SearchPresenterDelegate?
     
@@ -41,18 +40,18 @@ final class SearchPresenter: SearchPresenterProtocol {
             case .success(let cities):
                 self?.view?.updateActivity(shouldAnimate: false)
                 guard cities.count > 1 else {
-                    self?.view?.showAlert(WeatherAppError.nothingFound)
+                    self?.view?.show(error: WeatherAppError.nothingFound)
                     return
                 }
-                self?.updateViewWith(cities)
+                self?.updateView(with: cities)
             case .failure(let error):
                 self?.view?.updateActivity(shouldAnimate: false)
-                self?.view?.showAlert(error)
+                self?.view?.show(error: error)
             }
         }
     }
     
-    private func updateViewWith(_ cities: [City]) {
+    private func updateView(with cities: [City]) {
         let unique = Array(Set(cities))
         view?.updateWith(unique)
     }

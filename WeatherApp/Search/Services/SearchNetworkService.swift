@@ -20,7 +20,7 @@ final class SearchNetworkService: SearchNetworkServiceProtocol {
     }
     
     func search(by name: String, completion: @escaping (Result<[City], Error>) -> ()) {
-        let searchEndpoint = SearchByNameEndpoint.getCityBy(name: name)
+        let searchEndpoint = SearchEndpoint.findCities(byName: name)
         helper.request(endpoint: searchEndpoint,
                        completion: completion)
     }

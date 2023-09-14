@@ -11,9 +11,10 @@ fileprivate enum Constants {
     static let cellIdentifier = "CityCell"
 }
 
-protocol SearchViewControllerProtocol: UIViewController {
+protocol SearchViewControllerProtocol: AnyObject {
     func updateWith(_ cities: [City])
     func updateActivity(shouldAnimate: Bool)
+    func show(error: Error)
 }
 
 final class SearchViewController: UIViewController, SearchViewControllerProtocol {
@@ -63,6 +64,10 @@ final class SearchViewController: UIViewController, SearchViewControllerProtocol
         layoutSearchBar()
         layoutTableView()
         layoutActivity()
+    }
+    
+    func show(error: Error) {
+        showAlert(error)
     }
     
     func updateActivity(shouldAnimate: Bool) {

@@ -1,5 +1,5 @@
 //
-//  SearchByNameEndpoint.swift
+//  SearchEndpoint.swift
 //  WeatherApp
 //
 //  Created by Dima Shelkov on 11/09/2023.
@@ -7,35 +7,33 @@
 
 import Foundation
 
-// http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5&appid={API key}
-
-enum SearchByNameEndpoint: Endpoint {
-    case getCityBy(name: String)
+enum SearchEndpoint: Endpoint {
+    case findCities(byName: String)
     
     var scheme: String {
         switch self {
-        case .getCityBy:
+        case .findCities:
             return "https"
         }
     }
     
     var baseURL: String {
         switch self {
-        case .getCityBy:
+        case .findCities:
             return "api.openweathermap.org"
         }
     }
     
     var path: String {
         switch self {
-        case .getCityBy:
+        case .findCities:
             return "/geo/1.0/direct"
         }
     }
     
     var parameters: [URLQueryItem] {
         switch self {
-        case .getCityBy(let name):
+        case .findCities(let name):
             return [
                 URLQueryItem(name: "q", value: name),
                 URLQueryItem(name: "appid", value: Keys.apiKey),
@@ -46,7 +44,7 @@ enum SearchByNameEndpoint: Endpoint {
     
     var method: String {
         switch self {
-        case .getCityBy:
+        case .findCities:
             return "GET"
         }
     }
