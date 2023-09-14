@@ -16,3 +16,12 @@ extension UIView {
         layer.add(animation, forKey: CATransitionType.fade.rawValue)
     }
 }
+
+extension UIView {
+    func pinToCenter(to view: UIView, xOffset: CGFloat = 0, yOffset: CGFloat = 0) {
+        NSLayoutConstraint.activate([
+            centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: xOffset),
+            centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: yOffset)
+        ])
+    }
+}

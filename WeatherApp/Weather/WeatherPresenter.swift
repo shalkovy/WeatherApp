@@ -34,7 +34,7 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     
     func switchTemperatureUnit() {
         tempUnit = tempUnit == .celsius ? .fahrenheit : .celsius
-        updateWeatherDisplay()
+        updateWeather()
     }
     
     func didLoad() {
@@ -46,7 +46,7 @@ final class WeatherPresenter: WeatherPresenterProtocol {
         router.navigateToSearch(vc.navigationController, delegate: self)
     }
     
-    private func updateWeatherDisplay() {
+    private func updateWeather() {
         view?.updateActivity(shouldAnimate: false)
         guard let weatherData else { return }
         let temperatureString = formatter.convert(temperature: weatherData.main.temp,
@@ -63,7 +63,7 @@ extension WeatherPresenter: WeatherInteractorOutput {
         interactor.getWeather(lat: location.coordinate.latitude,
                               lon: location.coordinate.longitude) { [weak self] data in
             self?.weatherData = data
-            self?.updateWeatherDisplay()
+            self?.updateWeather()
         }
     }
     
@@ -78,7 +78,7 @@ extension WeatherPresenter: SearchPresenterDelegate {
         view?.updateActivity(shouldAnimate: true)
         interactor.getWeather(lat: city.lat, lon: city.lon) { [weak self] data in
             self?.weatherData = data
-            self?.updateWeatherDisplay()
+            self?.updateWeather()
         }
     }
 }

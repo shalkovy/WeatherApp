@@ -19,9 +19,29 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     private lazy var weatherLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor.textColor
-        label.font = .boldSystemFont(ofSize: 18)
+        label.font = .boldSystemFont(ofSize: Constants.fontSize)
         label.numberOfLines = 0
         label.textAlignment = .center
+        return label
+    }()
+    
+    private lazy var temperatureUnitsLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.textColor
+        label.font = .boldSystemFont(ofSize: Constants.fontSize)
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        label.text = "°C/°F"
+        return label
+    }()
+    
+    private lazy var darkModeLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor.textColor
+        label.font = .boldSystemFont(ofSize: Constants.fontSize)
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        label.text = "Light/Dark"
         return label
     }()
     
@@ -69,7 +89,7 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     func updateActivity(shouldAnimate: Bool) {
         shouldAnimate ? activity.startAnimating() : activity.stopAnimating()
         
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: Constants.animationDuration) {
             self.weatherLabel.alpha = shouldAnimate ? 0.0 : 1.0
         }
     }
@@ -87,7 +107,9 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         } else {
             currentMode = window.overrideUserInterfaceStyle
         }
-        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve) {
+        UIView.transition(with: window,
+                          duration: Constants.animationDuration,
+                          options: .transitionCrossDissolve) {
             window.overrideUserInterfaceStyle = currentMode == .dark ? .light : .dark
         }
     }
@@ -95,9 +117,42 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     private func layoutViews() {
         layoutWeatherLabel()
         layoutActivity()
-        setupNavBar()
+        setupNavigationBar()
+        layoutTemperatureLabel()
         layoutTemperatureSwitch()
+        layoutDarkModeLabel()
         layoutDarkModeSwitch()
+    }
+    
+    private func layoutDarkModeLabel() {
+        view.addSubview(darkModeLabel)
+        darkModeLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            darkModeLabel.topAnchor.constraint(
+                equalTo: tempUnitSwitch.bottomAnchor,
+                constant: Constants.verticalSpacing
+            ),
+            darkModeLabel.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: Constants.trailing
+            )
+        ])
+    }
+    
+    private func layoutTemperatureLabel() {
+        view.addSubview(temperatureUnitsLabel)
+        temperatureUnitsLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            temperatureUnitsLabel.topAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.topAnchor
+            ),
+            temperatureUnitsLabel.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: Constants.trailing
+            )
+        ])
     }
     
     private func layoutTemperatureSwitch() {
@@ -105,9 +160,13 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         tempUnitSwitch.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tempUnitSwitch.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tempUnitSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                 constant: -16)
+            tempUnitSwitch.topAnchor.constraint(
+                equalTo: temperatureUnitsLabel.bottomAnchor
+            ),
+            tempUnitSwitch.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: Constants.trailing
+            )
         ])
     }
     
@@ -116,35 +175,32 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         darkModeSwitch.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            darkModeSwitch.topAnchor.constraint(equalTo: tempUnitSwitch.bottomAnchor, constant: 8),
-            darkModeSwitch.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-                                                     constant: -16)
+            darkModeSwitch.topAnchor.constraint(
+                equalTo: darkModeLabel.bottomAnchor,
+                constant: Constants.verticalSpacing
+            ),
+            darkModeSwitch.trailingAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                constant: Constants.trailing
+            )
         ])
     }
     
     private func layoutActivity() {
         view.addSubview(activity)
         activity.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        activity.pinToCenter(to: view)
     }
     
     private func layoutWeatherLabel() {
         view.addSubview(weatherLabel)
         weatherLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            weatherLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            weatherLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        weatherLabel.pinToCenter(to: view)
     }
     
-    private func setupNavBar() {
+    private func setupNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "magnifyingglass"),
+            image: Constants.searchImage,
             style: .plain,
             target: self,
             action: #selector(searchTapped))
@@ -153,5 +209,15 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
     @objc
     private func searchTapped() {
         presenter.searchButtonTapped(from: self)
+    }
+}
+
+extension WeatherViewController {
+    enum Constants {
+        static let trailing: CGFloat = -16
+        static let verticalSpacing: CGFloat = 8
+        static let animationDuration = 0.5
+        static let fontSize: CGFloat = 18
+        static let searchImage = UIImage(systemName: "magnifyingglass")
     }
 }

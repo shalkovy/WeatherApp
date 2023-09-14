@@ -7,10 +7,6 @@
 
 import UIKit
 
-fileprivate enum Constants {
-    static let cellIdentifier = "CityCell"
-}
-
 protocol SearchViewControllerProtocol: AnyObject {
     func updateWith(_ cities: [City])
     func updateActivity(shouldAnimate: Bool)
@@ -84,11 +80,7 @@ final class SearchViewController: UIViewController, SearchViewControllerProtocol
     private func layoutActivity() {
         view.addSubview(activity)
         activity.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            activity.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activity.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
+        activity.pinToCenter(to: view)
     }
     
     private func layoutSearchBar() {
@@ -129,5 +121,11 @@ extension SearchViewController: UISearchBarDelegate {
             return
         }
         presenter.search(for: searchText)
+    }
+}
+
+extension SearchViewController {
+    enum Constants {
+        static let cellIdentifier = "CityCell"
     }
 }
