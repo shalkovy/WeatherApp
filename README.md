@@ -1,4 +1,13 @@
-# WeatherApp
+# WeatherApp 
+**Stack: iOS 14.0 (more than 96% users uses iOS 14 or later according to Apple), Swift, UIKit**
+
+**What to improve**:
+
+- I did the task without usage of third-party libraries, but for improvents I will add SnapKit to make UI layout methods more redable, also for the same puprose I can add Quick/Nible to simplify tests and Moya for networking
+- Implement DI
+- Add more tests
+- Add SwiftLint
+- Make more user friendly UI, of course :) 
 
 **Advantages of VIPER**:
   
