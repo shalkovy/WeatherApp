@@ -35,18 +35,18 @@ final class SearchPresenter: SearchPresenterProtocol {
     }
     
     func search(for city: String) {
-        view?.updateActivity(true)
+        view?.updateActivity(shouldAnimate: true)
         interactor.search(city) { [weak self] result in
             switch result {
             case .success(let cities):
-                self?.view?.updateActivity(false)
+                self?.view?.updateActivity(shouldAnimate: false)
                 guard cities.count > 1 else {
                     self?.view?.showAlert(WeatherAppError.nothingFound)
                     return
                 }
                 self?.updateViewWith(cities)
             case .failure(let error):
-                self?.view?.updateActivity(false)
+                self?.view?.updateActivity(shouldAnimate: false)
                 self?.view?.showAlert(error)
             }
         }

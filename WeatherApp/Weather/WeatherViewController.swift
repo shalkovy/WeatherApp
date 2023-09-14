@@ -9,7 +9,7 @@ import UIKit
 
 protocol WeatherViewControllerProtocol: AnyObject {
     func updateLabel(with text: String)
-    func updateActivity(animate isFetching: Bool)
+    func updateActivity(shouldAnimate: Bool)
     func show(error: Error)
 }
 
@@ -66,11 +66,11 @@ final class WeatherViewController: UIViewController, WeatherViewControllerProtoc
         showAlert(error)
     }
     
-    func updateActivity(animate: Bool) {
-        animate ? activity.startAnimating() : activity.stopAnimating()
+    func updateActivity(shouldAnimate: Bool) {
+        shouldAnimate ? activity.startAnimating() : activity.stopAnimating()
         
         UIView.animate(withDuration: 0.5) {
-            self.weatherLabel.alpha = animate ? 0.0 : 1.0
+            self.weatherLabel.alpha = shouldAnimate ? 0.0 : 1.0
         }
     }
     

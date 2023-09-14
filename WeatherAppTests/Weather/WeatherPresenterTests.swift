@@ -25,7 +25,7 @@ final class WeatherPresenterTests: XCTestCase {
         presenter = WeatherPresenter(
             interactor: mockInteractor,
             router: mockRouter,
-            temperatureFormatter: TemperatureFormatter(),
+            formatter: UnitFormatter(),
             tempUnit: .celsius
         )
         presenter.view = mockView
@@ -129,7 +129,7 @@ class MockWeatherViewController: WeatherViewControllerProtocol {
     var showAlertCalled = false
     var showAlertError: Error?
     
-    func updateActivity(animate: Bool) {
+    func updateActivity(shouldAnimate: Bool) {
         updateActivityCalled = true
     }
     

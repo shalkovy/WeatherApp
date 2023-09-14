@@ -13,7 +13,7 @@ fileprivate enum Constants {
 
 protocol SearchViewControllerProtocol: UIViewController {
     func updateWith(_ cities: [City])
-    func updateActivity(_ isFetching: Bool)
+    func updateActivity(shouldAnimate: Bool)
 }
 
 final class SearchViewController: UIViewController, SearchViewControllerProtocol {
@@ -65,8 +65,8 @@ final class SearchViewController: UIViewController, SearchViewControllerProtocol
         layoutActivity()
     }
     
-    func updateActivity(_ isFetching: Bool) {
-        isFetching ? activity.startAnimating() : activity.stopAnimating()
+    func updateActivity(shouldAnimate: Bool) {
+        shouldAnimate ? activity.startAnimating() : activity.stopAnimating()
     }
     
     func updateWith(_ cities: [City]) {

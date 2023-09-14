@@ -17,18 +17,18 @@ protocol WeatherPresenterProtocol {
 final class WeatherPresenter: WeatherPresenterProtocol {
     private let interactor: WeatherInteractorProtocol
     private let router: WeatherRouterProtocol
-    private let temperatureFormatter: TemperatureFormatter
+    private let formatter: UnitFormatter
     private(set) var tempUnit: UnitTemperature
     private var weatherData: WeatherData?
     weak var view: WeatherViewControllerProtocol?
     
     init(interactor: WeatherInteractorProtocol,
          router: WeatherRouterProtocol,
-         temperatureFormatter: TemperatureFormatter = TemperatureFormatter(),
+         formatter: UnitFormatter = UnitFormatter(),
          tempUnit: UnitTemperature = Locale.current.usesMetricSystem ? .celsius : .fahrenheit) {
         self.interactor = interactor
         self.router = router
-        self.temperatureFormatter = temperatureFormatter
+        self.formatter = formatter
         self.tempUnit = tempUnit
     }
     
@@ -38,7 +38,7 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     }
     
     func didLoad() {
-        view?.updateActivity(animate: true)
+        view?.updateActivity(shouldAnimate: true)
         interactor.getCurrentLocation()
     }
     
@@ -47,9 +47,9 @@ final class WeatherPresenter: WeatherPresenterProtocol {
     }
     
     private func updateWeatherDisplay() {
-        view?.updateActivity(animate: false)
+        view?.updateActivity(shouldAnimate: false)
         guard let weatherData else { return }
-        let temperatureString = temperatureFormatter.convert(temperature: weatherData.main.temp,
+        let temperatureString = formatter.convert(temperature: weatherData.main.temp,
                                                              to: tempUnit)
         let displayText = "\(weatherData.name)\n\(temperatureString)"
         view?.updateLabel(with: displayText)
@@ -59,7 +59,7 @@ final class WeatherPresenter: WeatherPresenterProtocol {
 extension WeatherPresenter: WeatherInteractorOutput {
     func didUpdate(_ location: CLLocation?) {
         guard let location else { return }
-        view?.updateActivity(animate: true)
+        view?.updateActivity(shouldAnimate: true)
         interactor.getWeather(lat: location.coordinate.latitude,
                               lon: location.coordinate.longitude) { [weak self] data in
             self?.weatherData = data
@@ -69,13 +69,13 @@ extension WeatherPresenter: WeatherInteractorOutput {
     
     func showError(_ error: Error) {
         view?.show(error: error)
-        view?.updateActivity(animate: false)
+        view?.updateActivity(shouldAnimate: false)
     }
 }
 
 extension WeatherPresenter: SearchPresenterDelegate {
     func didSelect(_ city: City) {
-        view?.updateActivity(animate: true)
+        view?.updateActivity(shouldAnimate: true)
         interactor.getWeather(lat: city.lat, lon: city.lon) { [weak self] data in
             self?.weatherData = data
             self?.updateWeatherDisplay()

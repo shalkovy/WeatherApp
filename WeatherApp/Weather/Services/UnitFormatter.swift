@@ -1,5 +1,5 @@
 //
-//  TemperatureFormatter.swift
+//  UnitFormatter.swift
 //  WeatherApp
 //
 //  Created by Dima Shelkov on 12/09/2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TemperatureFormatter {
+final class UnitFormatter {
     func convert(temperature: Double,
                  to unit: UnitTemperature) -> String {
         let measurementFormatter = MeasurementFormatter()
